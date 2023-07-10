@@ -30,18 +30,58 @@ unique_ptr<Usuarios> ReturnUsuarios(const wstring& Usuarios1, const wstring& con
 
 void AgregarUsuarios(int num)
 {
-    wstring Usuario2;
-    wstring Contraseñañ;
+    string opcion;
+    string * ptrOP;
+    ptrOP = &opcion;
+    //.................
+    wstring  Usuario2;
+    wstring  Contraseñañ;
     vector<unique_ptr<Usuarios>> AgreUsuarios;
 
     for ( i = 0; i < num; i++)
     {
         system("cls");
 
-        wcout << L"Deme usuario: " << L"(" << i+1 << L")" << endl;
-        wcin >> Usuario2;
-        wcout << L"Contraseña del usuario... " << L"(" << i+1 << L")" << endl;
-        wcin >> Contraseñañ;
+        while (true)
+        {
+            wcout << L"Deme usuario: " << L"(" << i+1 << L")" << endl;
+            wcin >> Usuario2;
+            
+            system("cls");
+
+            wcout << L"Usuario: " << Usuario2 << endl;
+            wcout << L"Esta bien escrito? s/n " << endl;
+            cin >> *ptrOP;
+
+            if (opcion == "s")
+            {
+                break;
+            }
+            
+        }
+        
+        system("cls");
+
+        while (true)
+        {
+            wcout << L"Contraseña del usuario... " << L"(" << i+1 << L")" << endl;
+            wcin >> Contraseñañ;
+
+            system("cls");
+
+            wcout << L"Contraseña: " <<Contraseñañ << endl;
+            wcout << L"La contraseña esta bien escrita? s/n " << endl;
+            cin >> *ptrOP;
+
+            if (opcion == "s")
+            {
+                break;
+            }
+
+        }
+        
+        
+
         AgreUsuarios.push_back(make_unique<Usuarios>(Usuario2,Contraseñañ)); // create various owners adding in a vector
     }
     
@@ -62,7 +102,31 @@ int main()
     {
         int num;
 
-        wcout << L"Cuantos usuarios agregara?: "; wcin >> num;
+        while (true)
+        {
+            system("cls");
+
+            try
+            {
+                wcout << L"Cuantos usuarios agregara?: "; wcin >> num;
+                if (num != 0 && num <= 20)
+                {
+                    system("cls");
+                    break;
+                }
+                else
+                {
+                    throw num;
+                }
+            }
+            catch(...)
+            {
+                cout << "No ponga caracteres." << endl;
+                Sleep(3000);
+            }
+            
+        }
+        
         AgregarUsuarios(num);
 
         string close;
